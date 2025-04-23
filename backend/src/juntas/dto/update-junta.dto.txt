@@ -1,0 +1,96 @@
+/* eslint-disable prettier/prettier */
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateJuntaDto } from './create-junta.dto';
+import { Allow, IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+export class UpdateJuntaDto extends PartialType(CreateJuntaDto) {
+
+
+  @IsNumber({}, { message: 'proyectoId debe ser un  número entero' })
+  proyectoId: number
+
+  //@IsInt({ message: 'inspectorID debe ser un número entero' })
+  inspectorId: number;
+
+  //@IsInt({ message: 'soldadorId debe ser un número entero' })
+  soldadorId: number;
+
+  //@IsInt({ message: 'lineaID debe ser un número entero' })
+  lineaId: number;
+
+  //@IsInt({ message: 'especificacionID debe ser un número entero' })
+  especificacionId: number;
+
+  @IsDateString(
+    {},
+    {
+      message:
+        'fecha debe ser una cadena de fecha ISO 8601 válida:ejemplo:2023-06-24T10:00:00Z',
+    },
+  )
+  fecha: string;
+
+  @IsString()
+  observaciones: string;
+
+  @IsNumber({}, { message: 'proyectoId debe ser un  número entero' })
+  schedule: number;
+
+  /*
+  @IsNotEmpty({ message: 'El campo  nominal no puede estar vacio' })
+  @IsString()
+  nominal: string;
+
+  @IsNotEmpty({ message: 'El campo  nominal1 no puede estar vacio' })
+  @IsString()
+  nominal1: string;
+
+  
+  @IsNotEmpty({ message: 'El campo  linea no puede estar vacio' })
+  @IsString()
+  linea: string;
+
+  @IsNotEmpty({ message: 'El campo  especificacion no puede estar vacio' })
+  @IsString()
+  especificacion: string;
+
+  @IsNotEmpty({ message: 'El campo   schedule no puede estar vacio' })
+  @IsString()
+  schedule: string;
+ 
+  @IsNotEmpty({ message: 'El campo   tipo_extremos no puede estar vacio' })
+  @IsString()
+  tipo_extremos: string;
+
+ 
+  @IsNotEmpty({ message: 'El campo   tipo_material no puede estar vacio' })
+  @IsString()
+  tipo_material: string;
+
+  @IsNotEmpty({ message: 'El campo   material no puede estar vacio' })
+  @IsString()
+  material: string;
+
+  @IsNotEmpty({ message: 'El campo   diam_inch_contabilizadas no puede estar vacio' })
+  @IsString()
+  diam_inch_contabilizadas: string;
+
+  @IsNotEmpty({ message: 'El campo  factor_pulgadas_diametrales no puede estar vacio' })
+  @IsString()
+  factor_pulgadas_diametrales: string;
+
+  @IsNotEmpty({ message: 'El campo  pulgadas_diametrales no puede estar vacio' })
+  @IsString()
+  pulgadas_diametrales: string;
+
+  @Allow()
+  @IsNotEmpty({ message: 'El campo  proyectID no puede estar vacio' })
+  @IsString()
+  proyectID: string;
+  
+  @Allow()
+  @IsNotEmpty({ message: 'El campo  usuarioID no puede estar vacio' })
+  @IsString()
+  usuarioID: string;
+*/
+
+}

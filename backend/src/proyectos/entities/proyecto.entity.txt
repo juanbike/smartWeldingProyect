@@ -1,0 +1,51 @@
+/* eslint-disable prettier/prettier */
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+
+import { Junta } from '../../juntas/entities/junta.entity';
+import { Inspectores } from '../../inspectores/entities/inspectore.entity';
+
+
+@Entity('proyecto')
+export class Proyecto {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  proyecto: string;
+
+  @Column()
+  cliente: string;
+
+  @Column()
+  titulo: string;
+
+  @Column()
+  revision: string;
+
+  @Column()
+  tipo: string;
+
+  @Column()
+  inspector: string;
+
+  @Column()
+  elaboradoPor: string;
+
+ 
+  @ManyToMany(() => Inspectores, inspector => inspector.proyectos)
+  @JoinTable({
+    name: 'proyecto_inspectores',
+    joinColumn: {
+      name: 'proyecto_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'inspector_id',
+      referencedColumnName: 'id',
+    },
+  })
+  inspectores: Inspectores[];
+
+  @OneToMany(() => Junta, junta => junta.proyecto)
+  juntas: Junta[];
+}

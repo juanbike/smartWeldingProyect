@@ -1,0 +1,65 @@
+/* eslint-disable prettier/prettier */
+//import { Proyecto } from '../../proyectos/entities/proyecto.entity';
+//import { Junta } from '../../juntas/entities/junta.entity';
+
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  UpdateDateColumn,
+  //ManyToMany,
+  //JoinTable,
+  //OneToMany
+} from 'typeorm';
+
+@Entity({ name: 'inspector' })
+export class Inspectores {
+ 
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ name: 'nombre', length: 25, nullable: false })
+  nombre: string;
+
+  @Column({ name: 'apellido', length: 25, nullable: false })
+  apellido: string;
+  
+  @Column({ name: 'telefono1', length: 25, nullable: false })
+  telefono1: string;
+
+  @Column({ name: 'telefono2', length: 25, nullable: false })
+  telefono2: string;
+
+  
+  @CreateDateColumn({ name: 'create_at' })
+  createdAt: Date;
+  
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: string;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: string;
+
+
+  /*
+  @ManyToMany(() => Proyecto, proyecto => proyecto.inspectores)
+  @JoinTable({
+    name: 'proyecto_inspectores',
+    joinColumn: {
+      name: 'proyecto_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'inspector_id',
+      referencedColumnName: 'id',
+    },
+  })
+  proyectos: Proyecto[];
+
+  @OneToMany(() => Junta, junta => junta.inspector)
+  juntas: Junta[];
+  */
+
+}

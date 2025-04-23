@@ -1,0 +1,431 @@
+Paso-1: ejecutamos typeorm y le damos la ruta del archivo de javascript de la fuente de datos
+	"typeorm": "npm run build && npx typeorm --dataSource dist/src/db/data-source.js"
+		npm run build = necesita ejecutarse con los archivos que estan ocompilados
+	
+							dat-source.js
+							--------------
+							  import { DataSource, DataSourceOptions } from "typeorm";
+								export const dataSourceOptions: DataSourceOptions = {
+									type: 'postgres',
+									  host: 'localhost',
+									  username: 'postgres',
+									  password: 'Canela123$$',
+									  database: 'smartwelding',
+									  entities: ['dist/**/*.entity.js'],
+									  migrations: ['dist/db/migrations/*.js']
+								}
+
+								const dataSource = new DataSource (dataSourceOptions)
+
+								export default dataSource
+	
+	
+Paso-2: Generamos la migracion
+		c:/>npm run m:g -- db/migrations/nuevaMigracion/otro:  npm run m:g -- db/migrations/campoPasword  
+
+        --db/migrations/ = Es la ruta 
+        /nuevaMigracion = Es el nombre de la migracion
+
+Paso-3: Ejecutamos la migracion
+
+        c:/>npm run m:r
+
+        > typeorm@0.0.1 m:r
+        > npm run typeorm -- migration:run
+
+
+        > typeorm@0.0.1 typeorm
+        > npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:run
+
+
+        > typeorm@0.0.1 build
+        > nest build
+
+        query: SELECT * FROM current_schema()
+        query: SELECT version();
+        query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+        query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+        1 migrations are already loaded in the database.
+        2 migrations were found in the source code.
+        NuevaMigracion1706027902313 is the last executed migration. It was executed on Tue Jan 23 2024 12:38:22 GMT-0400 (hora de Venezuela).
+        1 migrations are new migrations must be executed.
+        query: START TRANSACTION
+        query: ALTER TABLE "usuario" ADD "password" character varying NOT NULL
+        query: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1706033478748,"CampoPasword1706033478748"]
+        Migration CampoPasword1706033478748 has been  executed successfully.
+        query: COMMIT
+
+
+Paso-4: Revertir la migracion
+    c:/>npm npm run m:re = "m:re": "npm run typeorm -- migration:revert"
+    
+
+
+
+=====================================================================================================================================================
+                                                                    Campos nuevos para la tabla soldadores
+=====================================================================================================================================================
+
+
+@Column('text', { nullable: false })
+  @Column({ length: 15 })
+  @IsNotEmpty()
+  @IsString()
+  nombre: string;
+  
+@Column('text', { nullable: false })
+  @Column({ length: 15 })
+  @IsNotEmpty()
+  @IsString()
+  apellido: string;  
+
+@Column('text', { nullable: false })
+  @Column({ length: 11 })
+  @IsNotEmpty()
+  @IsString()
+  identificacion: string;
+  
+  
+@Column('text', { nullable: false })
+  @Column({ length: 10 })
+  @IsNotEmpty()
+  @IsString()
+  estampa: string;  
+  
+
+@Column('text', { nullable: false })
+  @Column({ length: 6 })
+  @IsNotEmpty()
+  @IsString()
+  valores: string;
+  
+@Column('text', { nullable: false })
+  @Column({ length: 4 })
+  @IsNotEmpty()
+  @IsString()
+  calificacion: string;  
+
+@Column('text', { nullable: false })
+  @Column({ length: 6 })
+  @IsNotEmpty()
+  @IsString()
+  baseMeal: string;
+  
+@Column('text', { nullable: false })
+  @Column({ length: 20 })
+  @IsNotEmpty()
+  @IsString()
+  numeroP: string;  
+  
+  
+  
+  =====================================================================================================================================================
+                                                                    consulta
+=====================================================================================================================================================
+
+post localhost:3500/api/soldadores
+-----------------------------------
+
+json
+{
+  "nombre": "Manda",
+  "apellido": "Gonzalez",
+  "identificacion": "AAAAA",
+  "valores": "ttttt",
+  "estampa": "yhkk8",
+  "calificacion": "yu76",
+  "baseMeal": "yyy",
+  "numeroP": "ghkkkkftuu"
+}
+
+patch localhost:3500/api/soldadores/1
+-------------------------------------
+json
+{
+  "nombre": "Jose",
+  "apellido": "Manrrique",
+  "identificacion": "AAAAA",
+  "valores": "ttttt",
+  "estampa": "yhkk8",
+  "calificacion": "yu76",
+  "baseMeal": "yyy",
+  "numeroP": "ghkkkkftuu"
+}
+
+===========================================================================================================================================
+                                                                        Migraciones
+============================================================================================================================================
+
+PS C:\a2> npm run m:g -- db/migrations/soldadores
+
+> apijuntas@0.0.1 m:g
+> npm run typeorm -- migration:generate db/migrations/soldadores
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:generate db/migrations
+/soldadores
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+Migration C:\a2\db\migrations/1706125500616-soldadores.ts has been generated successfully.
+PS C:\a2> npm run m:r
+
+> apijuntas@0.0.1 m:r
+> npm run typeorm -- migration:run
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:run
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = '
+migrations'
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+3 migrations are already loaded in the database.
+4 migrations were found in the source code.
+PS C:\a2> npm run m:g -- db/migrations/soldaValores
+
+> apijuntas@0.0.1 m:g
+> npm run typeorm -- migration:generate db/migrations/soldaValores
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:generate db/migrations
+/soldaValores
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+Migration C:\a2\db\migrations/1706126295642-soldaValores.ts has been generated successfully.
+PS C:\a2> npm run m:r
+
+> apijuntas@0.0.1 m:r
+> npm run typeorm -- migration:run
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:run
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = '
+migrations'
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+4 migrations are already loaded in the database.
+5 migrations were found in the source code.
+Soldadores1706125500616 is the last executed migration. It was executed on Wed Jan 24 2024 15:45:00 GMT
+-0400 (hora de Venezuela).
+1 migrations are new migrations must be executed.
+query: START TRANSACTION
+query: ALTER TABLE "soldadore" ADD "valores" character varying(6) NOT NULL
+query: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1706126295642,"Sol
+daValores1706126295642"]
+Migration SoldaValores1706126295642 has been  executed successfully.
+query: COMMIT
+PS C:\a2> npm run m:g -- db/migrations/soldaEstampa
+
+> apijuntas@0.0.1 m:g
+> npm run typeorm -- migration:generate db/migrations/soldaEstampa
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:generate db/migrations
+/soldaEstampa
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+Migration C:\a2\db\migrations/1706126511156-soldaEstampa.ts has been generated successfully.
+PS C:\a2> npm run m:r
+
+> apijuntas@0.0.1 m:r
+> npm run typeorm -- migration:run
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:run
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = '
+migrations'
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+PS C:\a2> npm run m:g -- db/migrations/soldaClasificacion
+
+> apijuntas@0.0.1 m:g
+> npm run typeorm -- migration:generate db/migrations/soldaClasificacion
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:generate db/migrations
+/soldaClasificacion
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+Migration C:\a2\db\migrations/1706126798624-soldaClasificacion.ts has been generated successfully.
+PS C:\a2> npm run m:r
+
+> apijuntas@0.0.1 m:r
+> npm run typeorm -- migration:run
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:run
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = '
+migrations'
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+6 migrations are already loaded in the database.
+7 migrations were found in the source code.
+SoldaEstampa1706126511156 is the last executed migration. It was executed on Wed Jan 24 2024 16:01:51 G
+MT-0400 (hora de Venezuela).
+1 migrations are new migrations must be executed.
+query: START TRANSACTION
+query: ALTER TABLE "soldadore" ADD "calificacion" character varying(4) NOT NULL
+query: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1706126798624,"Sol
+daClasificacion1706126798624"]
+Migration SoldaClasificacion1706126798624 has been  executed successfully.
+query: COMMIT
+PS C:\a2> npm run m:g -- db/migrations/soldaBaseMeal
+
+> apijuntas@0.0.1 m:g
+> npm run typeorm -- migration:generate db/migrations/soldaBaseMeal
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:generate db/migrations
+/soldaBaseMeal
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+Migration C:\a2\db\migrations/1706127016571-soldaBaseMeal.ts has been generated successfully.
+PS C:\a2> npm run m:r
+
+> apijuntas@0.0.1 m:r
+> npm run typeorm -- migration:run
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:run
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = '
+migrations'
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+7 migrations are already loaded in the database.
+8 migrations were found in the source code.
+SoldaClasificacion1706126798624 is the last executed migration. It was executed on Wed Jan 24 2024 16:0
+6:38 GMT-0400 (hora de Venezuela).
+1 migrations are new migrations must be executed.
+query: START TRANSACTION
+query: ALTER TABLE "soldadore" ADD "baseMeal" character varying(6) NOT NULL
+query: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1706127016571,"Sol
+daBaseMeal1706127016571"]
+Migration SoldaBaseMeal1706127016571 has been  executed successfully.
+query: COMMIT
+PS C:\a2> npm run m:g -- db/migrations/soldaNumeroP
+
+> apijuntas@0.0.1 m:g
+> npm run typeorm -- migration:generate db/migrations/soldaNumeroP
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:generate db/migrations
+/soldaNumeroP
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+Migration C:\a2\db\migrations/1706127186331-soldaNumeroP.ts has been generated successfully.
+PS C:\a2> npm run m:r
+
+> apijuntas@0.0.1 m:r
+> npm run typeorm -- migration:run
+
+
+> apijuntas@0.0.1 typeorm
+> npm run build && npx typeorm --dataSource dist/src/db/data-source.js migration:run
+
+
+> apijuntas@0.0.1 build
+> nest build
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = '
+migrations'
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+8 migrations are already loaded in the database.
+9 migrations were found in the source code.
+SoldaBaseMeal1706127016571 is the last executed migration. It was executed on Wed Jan 24 2024 16:10:16 GMT-0400 (hora de
+GMT-0400 (hora de Venezuela).
+1 migrations are new migrations must be executed.
+query: START TRANSACTION
+query: ALTER TABLE "soldadore" ADD "numeroP" character varying(20) NOT NULL
+query: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1706127186331,"SoldaNumeroP1706127186331"]
+daNumeroP1706127186331"]
+Migration SoldaNumeroP1706127186331 has been  executed successfully.
+query: COMMIT
+
+
+
+===========================================================================================================================================
+                                                             SINCRONIZACION
+============================================================================================================================================
+
+export const dataSourceOptions: DataSourceOptions = {
+    type: 'postgres',
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
+      username: process.env.DB_USERNAME || 'postgres',
+      password: process.env.DB_PASSWORD || 'Canela123$$',
+      database: process.env.DB_DATABASE || 'juntas',
+      entities: ['dist/**/*.entity.js'],
+      migrations: ['dist/db/migrations/*.js'],
+
+
+    La sincronizacion se refiere a la actualizacion de la estructura en los campos de la base de datos. TypeOrm compara las entidades
+    con la estructura en la base de datos, si hay algun cambio crea los campos en la tabla de la base de datos
+
+     synchronize: process.env.NODE_ENV !== 'production', // como no estamos en produccion la SINCRONIZACION esta activada
+     
+     
+     
+     
+     
+      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false, // Configuración SSL si es necesario
+}

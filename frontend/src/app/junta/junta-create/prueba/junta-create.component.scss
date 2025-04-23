@@ -1,0 +1,20 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  div {
+    display: flex;
+    gap: 10px;
+    label {
+      width: 200px;
+      }
+    }
+
+    .additionalEmails {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+  }

@@ -1,0 +1,3 @@
+17/02/24    Creación del módulo de soldadura, la función es crear y generar un código qr  que contenga toda la información sobre la soldadura de la junta:número de junta, tipo,
+            plano, linea, dimatetro, etc. Se imprimirá El código qr y se pegara al tuvo de la junta entonces el soldador escaneara el código qr y podrá ver toda la información
+             de la junta.
