@@ -27,14 +27,11 @@ export class UserType {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // Cambié el nombre de la propiedad a "name" para que sea más descriptivo y fácil de entender.
   @Column({ unique: true })
-  @Index() // Agrega un índice a la columna
+  @Index() // //Si la columna name es frecuentemente consultada o filtrada, considera agregar un índice para mejorar el rendimiento de las consultas:
   @IsString()
   @Length(3, 50) // Validación: El nombre debe tener entre 3 y 50 caracteres
-
-  //Si la columna name es frecuentemente consultada o filtrada, considera agregar un índice para mejorar el rendimiento de las consultas:
-  name: string;
+  name: string; // Cambié el nombre de la propiedad a "name" para que sea más descriptivo y fácil de entender.
 
   // Agrega una descripción opcional para el tipo de usuario.
   @Column({ nullable: true })
@@ -43,8 +40,8 @@ export class UserType {
   description?: string;
 
   // Relación uno a muchos: Un tipo de usuario puede tener muchos usuarios
-  @OneToMany(() => Usuario, (user) => user.userType)
-  users: Usuario[];
+  @OneToMany(() => Usuario, (user) => user.userType) // un tipo de usuario puede tener muchos usuarios
+  users: Usuario[]; // un tipo de usuario puede tener muchos usuarios
 
   @CreateDateColumn({ name: 'create_at' })
   createdAt: Date;
